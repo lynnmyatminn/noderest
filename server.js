@@ -72,8 +72,9 @@ const app = express();
 // };
 
 var corsOptions = {
-  origin: "https://dailydelivery.herokuapp.com/"
-};
+  origin: 'https://dailydelivery.herokuapp.com',
+  optionsSuccessStatus: 200 // For legacy browser support
+}
 
 app.use(cors(corsOptions));
 
