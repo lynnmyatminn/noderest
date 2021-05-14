@@ -84,9 +84,9 @@ app.use(cors(corsOptions));
 //   res.send('ok');
 // });
 
-app.use((req, res) => {
-  res.set('Access-Control-Allow-Origin', '*');
-});
+// app.use((req, res) => {
+//   res.set('Access-Control-Allow-Origin', '*');
+// });
 
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
