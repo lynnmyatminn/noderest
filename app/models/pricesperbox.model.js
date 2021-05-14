@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const PricesPerBox = sequelize.define("pricesperbox", {
+  return sequelize.define("pricesperbox", {
       code: {
         type: Sequelize.STRING
       },
@@ -25,5 +25,4 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.INTEGER
       },
     });
-    return PricesPerBox;
   };

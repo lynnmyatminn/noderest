@@ -1,7 +1,7 @@
 module.exports = app => {
     const locations = require("../controllers/location.controller.js");
   
-    var router = require("express").Router();
+    const router = require("express").Router();
 
     router.post("/", locations.create);
 

@@ -9,10 +9,10 @@ exports.create = (req, res) => {
 
 // Retrieve all users from the database.
 exports.findAll = (req, res) => {
-    const name = req.query.name;
-    var condition = name ? { name: { [Op.like]: `%${name}%` } } : null;
-  
-    User.findAll({ where: condition })
+  const name = req.query.name;
+  const condition = name ? {name: {[Op.like]: `%${name}%`}} : null;
+
+  User.findAll({ where: condition })
       .then(data => {
         res.send(data);
       })

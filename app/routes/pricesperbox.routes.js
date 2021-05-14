@@ -1,7 +1,7 @@
 module.exports = app => {
     const pricesperbox = require("../controllers/pricesperbox.controller.js");
   
-    var router = require("express").Router();
+    const router = require("express").Router();
 
     router.post("/", pricesperbox.create);
 

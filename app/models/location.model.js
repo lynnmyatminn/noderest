@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const Location = sequelize.define("location", {
+  return sequelize.define("location", {
       code: {
         type: Sequelize.STRING
       },
@@ -19,5 +19,4 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.INTEGER
       },
     });
-    return Location;
   };
