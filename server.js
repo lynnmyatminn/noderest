@@ -71,12 +71,22 @@ const app = express();
 //   console.log(">> All customers", JSON.stringify(customers, null, 2));
 // };
 
-var corsOptions = {
-  origin: 'https://dailydelivery.herokuapp.com',
-  optionsSuccessStatus: 200 // For legacy browser support
-}
+// var corsOptions = {
+//   origin: 'https://dailydelivery.herokuapp.com',
+//   optionsSuccessStatus: 200 // For legacy browser support
+// }
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
+app.use(cors());
+
+app.options('*', (req, res) => {
+  res.set('Access-Control-Allow-Origin', '*');
+  res.send('ok');
+});
+
+app.use((req, res) => {
+  res.set('Access-Control-Allow-Origin', '*');
+});
 
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
