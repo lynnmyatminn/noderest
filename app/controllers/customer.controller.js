@@ -3,6 +3,21 @@ const Customer = db.customers;
 const CustomerAddress = db.customerAddresses;
 const Op = db.Sequelize.Op;
 
+const getPagination = (page, size) => {
+  const limit = size ? +size : 3;
+  const offset = page ? page * limit : 0;
+
+  return { limit, offset };
+}
+
+const getPagingData = (data, page, limit) => {
+  const { count: totalItems, rows: customers } = data;
+  const currentPage = page ? +page : 0;
+  const totalPages = Math.ceil(totalItems / limit);
+
+  return { totalItems, tutorials, totalPages, currentPage };
+}
+
 // Create and Save a new customer
 exports.createCustomer = (customer) => {
   return Customer.create({
@@ -71,12 +86,15 @@ exports.findCustomerAddressById = (id) => {
 
 // Retrieve all customers include addresses from the database.
 exports.findAll = (req, res) => {
-    const title = req.query.title;
+    const { page, size, title } = req.query;
     var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+
+    const { limit, offset } = getPagination(page, size);
   
-    Customer.findAll({ where: condition, include: ["customerAddresses"]})
+    Customer.findAndCountAll({ where: condition, limit, offset, include: ["customerAddresses"]})
       .then(data => {
-        res.send(data);
+        const response = getPagingData(data, page, limit);
+        res.send(response);
       })
       .catch(err => {
         res.status(500).send({
@@ -118,5 +136,18 @@ exports.deleteAll = (req, res) => {
 
 // Find all published customers
 exports.findAllPublished = (req, res) => {
-  
+  const { page, size } = req.query;
+  const { limit, offset } = getPagination(page, size);
+
+  Customer.findAndCountAll({ where: { published: true }, limit, offset })
+    .then(data => {
+      const response = getPagingData(data, page, limit);
+      res.send(response);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving customers."
+      });
+    });
 };
